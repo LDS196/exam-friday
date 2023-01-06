@@ -3,13 +3,13 @@ import s from './Button.module.css'
 type ButtonType= {
     title: string
     callback: () => void
-    counter:boolean
+    disabled:boolean
 
 }
 
 const Button = (props:ButtonType) => {
     return (
-        <button className={s.button} disabled={!props.counter}  onClick={()=>props.callback()}>{props.title}</button>
+        <button className={s.button} disabled={props.disabled}  onClick={()=>props.callback()}>{props.title}</button>
     );
 };
 
