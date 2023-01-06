@@ -1,15 +1,24 @@
 import React from 'react';
 import s from './Button.module.css'
-type ButtonType= {
+
+type ButtonType = {
+    setSettings?: () => void
     title: string
     callback: () => void
-    disabled:boolean
+    disabled?: boolean
 
 }
 
-const Button = (props:ButtonType) => {
+const Button = (props: ButtonType) => {
+    const onClickHandler = () => {
+        if(props.setSettings){
+            props.setSettings()
+        }
+
+        props.callback()
+    }
     return (
-        <button className={s.button} disabled={props.disabled}  onClick={()=>props.callback()}>{props.title}</button>
+        <button className={s.button} disabled={props.disabled} onClick={onClickHandler}>{props.title}</button>
     );
 };
 

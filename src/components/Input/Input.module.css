@@ -11,7 +11,7 @@
 
 }
 .inputError{
-    background-color: lightblue;
+    background-color: lightpink;
     border: 1px solid red;
 }
 .input:focus {

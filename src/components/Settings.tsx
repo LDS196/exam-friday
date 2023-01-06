@@ -4,6 +4,7 @@ import {Input} from "./Input/Input";
 import Button from "./Button/Button";
 
 type SettingsType = {
+    setSettings:()=> void
     onChangeInputMax: (value: number) => void
     onChangeInputMin: (value: number) => void
     error: string
@@ -13,7 +14,7 @@ type SettingsType = {
 
 }
 const Settings: React.FC<SettingsType> = (props) => {
-    const {
+    const {setSettings,
         onChangeInputMax, onChangeInputMin,
         error, maxValue, minValue,
         setSettingForCounter
@@ -26,7 +27,7 @@ const Settings: React.FC<SettingsType> = (props) => {
                 <Input name={'Start Value'} callback={onChangeInputMin} value={minValue} error={error}/>
             </div>
             <div className={s.block__buttons}>
-                <Button title={'Set'} callback={setSettingForCounter} disabled={!!error}/>
+                <Button title={'Set'} callback={setSettingForCounter} disabled={!!error} setSettings={setSettings}/>
             </div>
         </div>
     );

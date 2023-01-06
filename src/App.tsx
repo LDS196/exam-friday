@@ -10,7 +10,7 @@ function App() {
     const textErrIncorrectValue = 'Incorrect value'
     const textErrMaxMinValue = 'Max Value should be more Start Value'
 
-
+    let [switcher, setSwitcher] = useState<boolean>(true)
     let [error, setError] = useState<string>('')
     let [isSet, setIsSet] = useState<boolean>(true);
 
@@ -18,6 +18,7 @@ function App() {
     let [minValue, setMinValue] = useState<number>(0);
 
     let [counter, setCounter] = useState<number>(0);
+    const [firstRendering, setFirstRendering] = useState(true)
 
     const count = () => {
         counter = counter + 1
@@ -60,7 +61,14 @@ function App() {
         }
     }
 
-    const [firstRendering, setFirstRendering] = useState(true)
+    const setSettings = () => {
+        if(switcher){
+            setSwitcher(false)
+        } else setSwitcher(true)
+
+    }
+
+
 
     useEffect(() => {
         if (!firstRendering) {
@@ -79,27 +87,35 @@ function App() {
 
         const minValue = localStorage.getItem('minValue')
         if (minValue) {
+
             let newMinValue = JSON.parse(minValue)
             setMinValue(newMinValue)
+            setIsSet(false)
+            setCounter(newMinValue)
         }
     }, []);
 
     return (
         <div className={s.main}>
-            <Settings
+            {switcher?
+                <Counter error={error}
+                         counter={counter}
+                         maxValue={maxValue}
+                         count={count}
+                         countReset={countReset}
+                         minValue={minValue}
+                         isSet={isSet}
+                         callback={setSettings}/>
+            :<Settings
+                setSettings={setSettings}
                 onChangeInputMax={onChangeInputMax}
                 onChangeInputMin={onChangeInputMin}
                 error={error}
                 maxValue={maxValue}
                 minValue={minValue}
                 setSettingForCounter={setSettingForCounter}/>
-            <Counter error={error}
-                     counter={counter}
-                     maxValue={maxValue}
-                     count={count}
-                     countReset={countReset}
-                     minValue={minValue}
-                     isSet={isSet}/>
+
+            }
         </div>
     );
 }

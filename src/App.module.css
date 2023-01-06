@@ -1,16 +1,9 @@
 .main {
+
     display: flex;
     justify-content: space-around;
-    /*margin: 50px auto;*/
-    /*width: 400px;*/
-    /*font-size: 24px;*/
-    /*border: 1px solid black;*/
-    /*border-radius: 3px;*/
-    /*padding: 10px;*/
 }
-.settings{
 
-}
 .block{
     display: flex;
     flex-direction: column;
@@ -18,7 +11,7 @@
     padding: 10px;
     border-radius: 3px;
     background-color: lightslategrey;
-    width: 300px;
+    width: 350px;
 
 }
 .block__display{
