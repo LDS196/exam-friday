@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import s from './App.module.css'
 import './App.module.css';
 import Counter from "./components/Counter";
 import Settings from "./components/Settings";
+import {Navigate, Route, Routes} from "react-router-dom";
 
 
 function App() {
@@ -29,7 +30,8 @@ function App() {
     const countReset = () => {
         setCounter(minValue)
     }
-    const onChangeInputMax = (value: number) => {
+    const onChangeInputMax = (e: ChangeEvent<HTMLInputElement>) => {
+        const value = Number(e.currentTarget.value)
         setIsSet(true)
         if (value <= 0) {
             setError(textErrIncorrectValue)
@@ -39,7 +41,8 @@ function App() {
             setError('')
         }
     }
-    const onChangeInputMin = (value: number) => {
+    const onChangeInputMin = (e: ChangeEvent<HTMLInputElement>) => {
+        const value = Number(e.currentTarget.value)
         setIsSet(true)
         if (value < 0) {
             setError(textErrIncorrectValue)
@@ -62,12 +65,11 @@ function App() {
     }
 
     const setSettings = () => {
-        if(switcher){
+        if (switcher) {
             setSwitcher(false)
         } else setSwitcher(true)
 
     }
-
 
 
     useEffect(() => {
@@ -97,25 +99,55 @@ function App() {
 
     return (
         <div className={s.main}>
-            {switcher?
-                <Counter error={error}
-                         counter={counter}
-                         maxValue={maxValue}
-                         count={count}
-                         countReset={countReset}
-                         minValue={minValue}
-                         isSet={isSet}
-                         callback={setSettings}/>
-            :<Settings
-                setSettings={setSettings}
-                onChangeInputMax={onChangeInputMax}
-                onChangeInputMin={onChangeInputMin}
-                error={error}
-                maxValue={maxValue}
-                minValue={minValue}
-                setSettingForCounter={setSettingForCounter}/>
+            {/*<Counter error={error}*/}
+            {/*         counter={counter}*/}
+            {/*         maxValue={maxValue}*/}
+            {/*         count={count}*/}
+            {/*         countReset={countReset}*/}
+            {/*         minValue={minValue}*/}
+            {/*         isSet={isSet}*/}
+            {/*         callback={setSettings}/>*/}
+            <Routes>
+                <Route path={'/'} element={<Navigate to={'/counter'}/>}></Route>
+                <Route path={'/counter'} element={<Counter
+                    error={error}
+                    counter={counter}
+                    maxValue={maxValue}
+                    count={count}
+                    countReset={countReset}
+                    minValue={minValue}
+                    isSet={isSet}
+                    callback={setSettings}/>}></Route>
 
-            }
+                <Route path={'/settings'} element={<Settings
+                    setSettings={setSettings}
+                    onChangeInputMax={onChangeInputMax}
+                    onChangeInputMin={onChangeInputMin}
+                    error={error}
+                    maxValue={maxValue}
+                    minValue={minValue}
+                    setSettingForCounter={setSettingForCounter}/>}></Route>
+            </Routes>
+
+            {/*{switcher*/}
+            {/*    ? <Counter error={error}*/}
+            {/*             counter={counter}*/}
+            {/*             maxValue={maxValue}*/}
+            {/*             count={count}*/}
+            {/*             countReset={countReset}*/}
+            {/*             minValue={minValue}*/}
+            {/*             isSet={isSet}*/}
+            {/*             callback={setSettings}/>*/}
+            {/*:<Settings*/}
+            {/*    setSettings={setSettings}*/}
+            {/*    onChangeInputMax={onChangeInputMax}*/}
+            {/*    onChangeInputMin={onChangeInputMin}*/}
+            {/*    error={error}*/}
+            {/*    maxValue={maxValue}*/}
+            {/*    minValue={minValue}*/}
+            {/*    setSettingForCounter={setSettingForCounter}/>*/}
+
+            {/*/!*}*!/*/}
         </div>
     );
 }

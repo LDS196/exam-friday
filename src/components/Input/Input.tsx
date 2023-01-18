@@ -5,7 +5,7 @@ import s from './Input.module.css'
 
 type InputType = {
     name: string
-    callback: (value: number) => void
+    callback: (value: string) => void
     value: number
     error: string
 }
@@ -14,7 +14,7 @@ export const Input = (props: InputType) => {
     const finalClassNameForInput = `${s.input} ${props.error ? s.inputError : ''}`
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        props.callback(Number(e.currentTarget.value))
+        props.callback(e.currentTarget.value)
     }
     return (
         <>

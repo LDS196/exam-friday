@@ -1,5 +1,4 @@
 import React from 'react';
-import s from './Button.module.css'
 
 type ButtonType = {
     setSettings?: () => void
@@ -17,8 +16,16 @@ const Button = (props: ButtonType) => {
 
         props.callback()
     }
-    return (
-        <button className={s.button} disabled={props.disabled} onClick={onClickHandler}>{props.title}</button>
+    return (<>
+        {/*<NavLink to={'/settings'}>*/}
+            <button
+                // className={s.button}
+                    disabled={props.disabled} onClick={onClickHandler}>{props.title}</button>
+        {/*</NavLink>*/}
+        {/*<Routes>*/}
+        {/*    <Route path={'/settings'} element={<Settings setSettings={} onChangeInputMax={} onChangeInputMin={} error={} maxValue={} minValue={} setSettingForCounter={}}/>*/}
+        {/*</Routes>*/}
+        </>
     );
 };
 

@@ -1,6 +1,9 @@
 import React from 'react';
 import s from "../App.module.css";
-import Button from "./Button/Button";
+
+import Button from '@mui/material/Button';
+import {ButtonGroup, Paper} from "@mui/material";
+import {NavLink} from "react-router-dom";
 
 type SettingsType = {
     callback: () => void
@@ -27,17 +30,26 @@ const Counter: React.FC<SettingsType> = (props) => {
     const textErrGreeting = 'Enter value and press  button Set!'
     const finalClassNameFor = s.block__display + ' ' + `${counter === maxValue ? s.maxValue : ''}` + ' ' + `${error ? s.error : ''}`
     return (
-        <div className={s.block}>
-            <div className={finalClassNameFor}>
+        <Paper className={s.block} elevation={6}>
+            <Paper className={finalClassNameFor} elevation={1}>
                 {error ? error : !isSet ? counter : textErrGreeting}
-            </div>
+            </Paper>
+
             <div className={s.block__buttons}>
-                <Button title={'increment'} callback={count} disabled={isSet || counter === maxValue}/>
-                <Button title={'reset'} callback={countReset} disabled={!(counter > minValue)}/>
-                <Button title={'set'} callback={callback}/>
+                <ButtonGroup fullWidth>
+                    <Button sx={{mr: 1}} variant="contained" onClick={count}
+                            disabled={isSet || counter === maxValue}>increment</Button>
+                    <Button sx={{mr: 1}} variant="contained" onClick={countReset}
+                            disabled={!(counter > minValue)}>reset</Button>
+                    <NavLink to={'/settings'} ><Button variant="contained"
+                                                       // onClick={callback}
+                    >set</Button></NavLink>
+
+                </ButtonGroup>
             </div>
 
-        </div>
+        </Paper>
+
     );
 };
 
