@@ -4,6 +4,9 @@ import './App.module.css';
 import Counter from "./components/Counter";
 import Settings from "./components/Settings";
 import {Navigate, Route, Routes} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import { IGlobalState} from "./components/redux/store";
+import {setCounterAC, setMaxValueAC, setMinValueAC} from "./components/redux/counter-reducer";
 
 
 function App() {
@@ -15,29 +18,32 @@ function App() {
     let [error, setError] = useState<string>('')
     let [isSet, setIsSet] = useState<boolean>(true);
 
-    let [maxValue, setMaxValue] = useState<number>(0);
-    let [minValue, setMinValue] = useState<number>(0);
+    let {maxValue, minValue, counter} = useSelector((state: IGlobalState) => state.counter)
+    const dispatch = useDispatch()
 
-    let [counter, setCounter] = useState<number>(0);
     const [firstRendering, setFirstRendering] = useState(true)
 
     const count = () => {
         counter = counter + 1
         if (counter <= maxValue) {
-            setCounter(counter)
+            dispatch(setCounterAC(counter))
+            // setCounter(counter)
         }
     }
     const countReset = () => {
-        setCounter(minValue)
+        dispatch(setCounterAC(minValue))
+        // setCounter(minValue)
     }
     const onChangeInputMax = (e: ChangeEvent<HTMLInputElement>) => {
         const value = Number(e.currentTarget.value)
         setIsSet(true)
         if (value <= 0) {
             setError(textErrIncorrectValue)
-            setMaxValue(value)
+            dispatch(setMaxValueAC(value))
+            // setMaxValue(value)
         } else {
-            setMaxValue(value)
+            dispatch(setMaxValueAC(value))
+            // setMaxValue(value)
             setError('')
         }
     }
@@ -46,20 +52,24 @@ function App() {
         setIsSet(true)
         if (value < 0) {
             setError(textErrIncorrectValue)
-            setMinValue(value)
+            dispatch(setMinValueAC(value))
+            // setMinValue(value)
         } else {
-            setMinValue(value)
+            dispatch(setMinValueAC(value))
+            // setMinValue(value)
             setError('')
         }
     }
 
     const setSettingForCounter = () => {
         if (minValue < maxValue && minValue >= 0 && maxValue > 0) {
-            setCounter(minValue)
+            dispatch(setCounterAC(minValue))
+            // setCounter(minValue)
             setError('')
             setIsSet(false)
         } else {
-            setCounter(0)
+            dispatch(setCounterAC(0))
+            // setCounter(0)
             setError(textErrMaxMinValue)
         }
     }
@@ -84,16 +94,19 @@ function App() {
         const maxValue = localStorage.getItem('maxValue')
         if (maxValue) {
             let newMaxValue = JSON.parse(maxValue)
-            setMaxValue(newMaxValue)
+            dispatch(setMaxValueAC(newMaxValue))
+            // setMaxValue(newMaxValue)
         }
 
         const minValue = localStorage.getItem('minValue')
         if (minValue) {
 
             let newMinValue = JSON.parse(minValue)
-            setMinValue(newMinValue)
+            // setMinValue(newMinValue)
+            dispatch(setMinValueAC(newMinValue))
             setIsSet(false)
-            setCounter(newMinValue)
+            dispatch(setCounterAC(newMinValue))
+            // setCounter(newMinValue)
         }
     }, []);
 
