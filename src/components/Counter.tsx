@@ -27,7 +27,7 @@ const Counter: React.FC<SettingsType> = (props) => {
         minValue,
         isSet
     } = props
-    const textErrGreeting = 'Enter value and press  button Set!'
+    const textErrGreeting = 'Press button Set and enter value!'
     const finalClassNameFor = s.block__display + ' ' + `${counter === maxValue ? s.maxValue : ''}` + ' ' + `${error ? s.error : ''}`
     return (
         <Paper className={s.block} elevation={6}>
